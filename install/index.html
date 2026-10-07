@@ -27,20 +27,20 @@
         <a href="../docs/index.html">Documentation</a>
         <a href="../status/index.html">Statut</a>
         <a href="../roadmap/index.html">Roadmap</a>
-        <a class="mobile-nav-cta" data-install-cta href="../install/index.html#ajouter">Guide d'installation</a>
+        <a class="mobile-nav-cta" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord</a>
       </nav>
-      <div class="header-actions"><a class="button button-header" data-install-cta href="../install/index.html#ajouter">Installer FreeGameDrop <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
+      <div class="header-actions"><a class="button button-header" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
     </div>
   </header>
 <main id="main-content">
   <section class="install-hero container">
     <div class="install-copy">
       <p class="eyebrow"><a href="../discord-bots/freegamedrop/index.html">FREEGAMEDROP</a> <span class="crumb-slash">/</span> INSTALLATION</p>
-      <span class="status-pill status-neutral install-state" data-install-state><span></span> Lien de production à configurer</span>
+      <span class="status-pill status-current install-state" data-install-state><span></span> Invitation prête</span>
       <h1>Sur ton serveur.<br><span>En quelques étapes.</span></h1>
       <p class="hero-lead">Le parcours est celui de Discord : autoriser le bot, choisir un serveur, puis lancer son assistant de configuration. Pas de compte OverX à créer.</p>
-      <div class="install-copy-actions"><a class="button button-primary install-main-cta" data-discord-install href="#ajouter" aria-disabled="true">Invitation Discord à configurer <span aria-hidden="true">↗</span></a><button class="button button-secondary copy-admin-button" data-copy-admin type="button" hidden>Copier un message pour mon admin</button></div>
-      <p class="install-live-note" data-install-status>Le lien officiel de l'application PROD n'a pas encore été renseigné.</p>
+      <div class="install-copy-actions"><a class="button button-primary install-main-cta" data-discord-install href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a><button class="button button-secondary copy-admin-button" data-copy-admin type="button" hidden>Copier un message pour mon admin</button></div>
+      <p class="install-live-note" data-install-status>Invitation officielle configurée. Discord te demandera de choisir un serveur et de vérifier les permissions.</p>
     </div>
     <div class="install-flow-card" aria-label="Les trois étapes de l'installation">
       <div class="install-flow-header"><span class="flow-logo">FG<span>D</span></span><div><strong>Installation FreeGameDrop</strong><small>Parcours dans Discord</small></div><span class="flow-lock" aria-hidden="true">⌑</span></div>
@@ -67,7 +67,7 @@
   <section class="section container">
     <div class="install-permissions-layout">
       <div><p class="eyebrow">PERMISSIONS AFFICHÉES PAR DISCORD</p><h2>Le minimum utile<br><span>pour faire fonctionner le bot.</span></h2><p class="section-intro">FreeGameDrop doit pouvoir créer les espaces de jeux et publier les offres. Discord t'affichera la demande avant l'ajout.</p></div>
-      <div class="install-permissions-card"><div class="permission-heading"><span class="permission-discord-icon">◉</span><div><strong>Permissions du serveur</strong><small>Demandées lors de l'ajout</small></div></div><div class="permission-check-row"><span>✓</span> Gérer les salons</div><div class="permission-check-row"><span>✓</span> Gérer les rôles de plateforme</div><div class="permission-check-row"><span>✓</span> Voir les salons</div><div class="permission-check-row"><span>✓</span> Envoyer des messages et intégrer des liens</div><p class="permission-footnote">Ces permissions correspondent à l'invitation documentée dans le dépôt fourni. Discord reste l'écran de confirmation officiel.</p></div>
+      <div class="install-permissions-card"><div class="permission-heading"><span class="permission-discord-icon">◉</span><div><strong>Permissions du serveur</strong><small>Demandées lors de l'ajout</small></div></div><div class="permission-check-row"><span>✓</span> Gérer les salons</div><div class="permission-check-row"><span>✓</span> Gérer les rôles de plateforme</div><div class="permission-check-row"><span>✓</span> Voir les salons</div><div class="permission-check-row"><span>✓</span> Envoyer des messages et intégrer des liens</div><div class="permission-optional"><strong>Deux permissions optionnelles sont aussi incluses dans l'invitation :</strong><p>Lire l'historique et gérer les messages. D'après la documentation du bot, elles servent au nettoyage d'anciens panneaux; elles ne sont pas nécessaires pour recevoir les alertes.</p></div><p class="permission-footnote">Discord affiche la demande exacte avant l'ajout. Tu peux annuler si les permissions ne te conviennent pas.</p></div>
     </div>
   </section>
 
@@ -77,7 +77,7 @@
       <div class="install-help-list">
         <details class="faq-item"><summary>Mon serveur n'apparaît pas dans Discord.</summary><p>Ton compte n'a probablement pas la permission de gérer ce serveur. Demande à un administrateur ou à un membre ayant « Gérer le serveur » de lancer l'invitation.</p></details>
         <details class="faq-item"><summary>Le bot est ajouté, mais aucun salon n'a été créé.</summary><p>L'installation ajoute l'application au serveur; la configuration des salons se lance ensuite avec <code>/setup-auto</code>. Le bot doit être en ligne et conserver les permissions nécessaires.</p></details>
-        <details class="faq-item"><summary>Discord refuse une permission ou l'invitation semble incorrecte.</summary><p>Ne tente pas d'utiliser l'application de développement. L'équipe doit renseigner ici le lien OAuth2 de production vérifié. Tant qu'il n'est pas configuré, le bouton reste désactivé.</p></details>
+        <details class="faq-item"><summary>Discord refuse une permission ou l'invitation semble incorrecte.</summary><p>Vérifie que l'invitation correspond à l'application de production. Le lien affiché sur OverX est celui fourni par l'équipe; si Discord montre un serveur ou des permissions inattendus, annule et contacte le support.</p></details>
         <details class="faq-item"><summary>Je suis sur téléphone.</summary><p>Le même bouton ouvre Discord ou son navigateur. Connecte-toi au bon compte, choisis le serveur, puis confirme l'autorisation. Si tu ne peux pas gérer le serveur, demande à son administrateur.</p></details>
       </div>
     </div>

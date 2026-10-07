@@ -313,3 +313,6 @@ strong { color: #fff; font-weight: 650; }
   .install-bottom-actions { width: 100%; }
   .install-bottom-actions .button { width: 100%; }
 }
+.permission-optional { margin-top: 12px; padding: 11px 12px; border: 1px solid rgba(255,189,130,.14); border-radius: 9px; background: rgba(255,189,130,.035); }
+.permission-optional strong { color: #e5bd92; font-size: 8px; }
+.permission-optional p { margin: 4px 0 0; color: #a19383; font-size: 8px; line-height: 1.65; }

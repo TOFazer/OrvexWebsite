@@ -2,8 +2,10 @@
 """Build OverX's dependency-free, crawlable static website."""
 from __future__ import annotations
 
+import re
 from html import escape
 from pathlib import Path, PurePosixPath
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -255,7 +257,7 @@ PAGES: list[dict[str, str]] = [
   <section class="section container">
     <div class="install-permissions-layout">
       <div><p class="eyebrow">PERMISSIONS AFFICHÉES PAR DISCORD</p><h2>Le minimum utile<br><span>pour faire fonctionner le bot.</span></h2><p class="section-intro">FreeGameDrop doit pouvoir créer les espaces de jeux et publier les offres. Discord t'affichera la demande avant l'ajout.</p></div>
-      <div class="install-permissions-card"><div class="permission-heading"><span class="permission-discord-icon">◉</span><div><strong>Permissions du serveur</strong><small>Demandées lors de l'ajout</small></div></div><div class="permission-check-row"><span>✓</span> Gérer les salons</div><div class="permission-check-row"><span>✓</span> Gérer les rôles de plateforme</div><div class="permission-check-row"><span>✓</span> Voir les salons</div><div class="permission-check-row"><span>✓</span> Envoyer des messages et intégrer des liens</div><p class="permission-footnote">Ces permissions correspondent à l'invitation documentée dans le dépôt fourni. Discord reste l'écran de confirmation officiel.</p></div>
+      <div class="install-permissions-card"><div class="permission-heading"><span class="permission-discord-icon">◉</span><div><strong>Permissions du serveur</strong><small>Demandées lors de l'ajout</small></div></div><div class="permission-check-row"><span>✓</span> Gérer les salons</div><div class="permission-check-row"><span>✓</span> Gérer les rôles de plateforme</div><div class="permission-check-row"><span>✓</span> Voir les salons</div><div class="permission-check-row"><span>✓</span> Envoyer des messages et intégrer des liens</div><div class="permission-optional"><strong>Deux permissions optionnelles sont aussi incluses dans l'invitation :</strong><p>Lire l'historique et gérer les messages. D'après la documentation du bot, elles servent au nettoyage d'anciens panneaux; elles ne sont pas nécessaires pour recevoir les alertes.</p></div><p class="permission-footnote">Discord affiche la demande exacte avant l'ajout. Tu peux annuler si les permissions ne te conviennent pas.</p></div>
     </div>
   </section>
 
@@ -265,7 +267,7 @@ PAGES: list[dict[str, str]] = [
       <div class="install-help-list">
         <details class="faq-item"><summary>Mon serveur n'apparaît pas dans Discord.</summary><p>Ton compte n'a probablement pas la permission de gérer ce serveur. Demande à un administrateur ou à un membre ayant « Gérer le serveur » de lancer l'invitation.</p></details>
         <details class="faq-item"><summary>Le bot est ajouté, mais aucun salon n'a été créé.</summary><p>L'installation ajoute l'application au serveur; la configuration des salons se lance ensuite avec <code>/setup-auto</code>. Le bot doit être en ligne et conserver les permissions nécessaires.</p></details>
-        <details class="faq-item"><summary>Discord refuse une permission ou l'invitation semble incorrecte.</summary><p>Ne tente pas d'utiliser l'application de développement. L'équipe doit renseigner ici le lien OAuth2 de production vérifié. Tant qu'il n'est pas configuré, le bouton reste désactivé.</p></details>
+        <details class="faq-item"><summary>Discord refuse une permission ou l'invitation semble incorrecte.</summary><p>Vérifie que l'invitation correspond à l'application de production. Le lien affiché sur OverX est celui fourni par l'équipe; si Discord montre un serveur ou des permissions inattendus, annule et contacte le support.</p></details>
         <details class="faq-item"><summary>Je suis sur téléphone.</summary><p>Le même bouton ouvre Discord ou son navigateur. Connecte-toi au bon compte, choisis le serveur, puis confirme l'autorisation. Si tu ne peux pas gérer le serveur, demande à son administrateur.</p></details>
       </div>
     </div>
@@ -505,6 +507,36 @@ NAV_ITEMS = [
 ]
 
 
+def configured_install_url() -> str | None:
+    """Read the public install target so generated anchors work without JavaScript too."""
+    config_path = ROOT / "assets/site-config.js"
+    if not config_path.exists():
+        return None
+    source = config_path.read_text(encoding="utf-8")
+    supplied = re.search(r'^\s*discordInstallUrl:\s*"([^"]*)"', source, re.MULTILINE)
+    if supplied and supplied.group(1).strip():
+        candidate = supplied.group(1).strip()
+        parsed = urlsplit(candidate)
+        if (
+            parsed.scheme == "https"
+            and parsed.hostname == "discord.com"
+            and parsed.path.startswith("/oauth2/authorize")
+            and parse_qs(parsed.query).get("client_id")
+        ):
+            return candidate
+
+    app_id = re.search(r'^\s*discordApplicationId:\s*"(\d{17,20})"', source, re.MULTILINE)
+    if not app_id:
+        return None
+    permissions = re.search(r'^\s*installPermissions:\s*"(\d+)"', source, re.MULTILINE)
+    query = urlencode({
+        "client_id": app_id.group(1),
+        "permissions": permissions.group(1) if permissions else "268454928",
+        "scope": "bot applications.commands",
+    })
+    return f"https://discord.com/oauth2/authorize?{query}"
+
+
 def asset_root(path: str) -> str:
     depth = len(PurePosixPath(path).parent.parts)
     return "../" * depth
@@ -537,7 +569,21 @@ def render_page(page: dict[str, str]) -> str:
     title = escape(page["title"], quote=True)
     description = escape(page["description"], quote=True)
     robots = '<meta name="robots" content="noindex,follow">' if path in {"privacy/index.html", "terms/index.html", "legal/index.html"} else ""
+    install_url = configured_install_url()
+    install_href = escape(install_url, quote=True) if install_url else f"{root}install/index.html#ajouter"
+    install_target = ' target="_blank" rel="noopener noreferrer"' if install_url else ""
+    install_label = "Ajouter à Discord" if install_url else "Guide d'installation"
     body = page["body"].replace("{{ROOT}}", root).strip()
+    if install_url:
+        body = body.replace(f'data-install-cta href="{root}install/index.html#ajouter"', f'data-install-cta href="{install_href}"{install_target}')
+        body = body.replace('>Guide d\'installation <span aria-hidden="true">↗</span></a>', '>Ajouter à Discord <span aria-hidden="true">↗</span></a>')
+        body = body.replace('data-discord-install href="#ajouter" aria-disabled="true"', f'data-discord-install href="{install_href}"{install_target}')
+        body = body.replace('>Invitation Discord à configurer <span aria-hidden="true">↗</span></a>', '>Ajouter à Discord <span aria-hidden="true">↗</span></a>')
+        body = body.replace('class="status-pill status-neutral install-state" data-install-state><span></span> Lien de production à configurer', 'class="status-pill status-current install-state" data-install-state><span></span> Invitation prête')
+        body = body.replace("Le lien d'invitation Discord n'a pas encore été communiqué.", "Invitation Discord configurée. Choisis le serveur, puis autorise le bot dans Discord.")
+        body = body.replace("Application ID / invitation publique à renseigner dans la configuration du site.", "Le bouton ouvre l'invitation OAuth2 fournie pour l'application de production.")
+        body = body.replace("L'invitation publique n'est pas encore renseignée. Le bouton d'installation restera inactif jusque-là.", "Le bouton ouvre l'invitation officielle de production.")
+        body = body.replace("Le lien officiel de l'application PROD n'a pas encore été renseigné.", "Invitation officielle configurée. Discord te demandera de choisir un serveur et de vérifier les permissions.")
     nav = render_nav(root, page["active"])
     footer = render_footer(root)
     return f"""<!doctype html>
@@ -565,9 +611,9 @@ def render_page(page: dict[str, str]) -> str:
       <a class="brand" href="{root}index.html" aria-label="OverX — accueil"><img src="{root}assets/brand-mark.svg" alt="" width="36" height="36"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a>
       <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Navigation principale">
         {nav}
-        <a class="mobile-nav-cta" data-install-cta href="{root}install/index.html#ajouter">Guide d'installation</a>
+        <a class="mobile-nav-cta" data-install-cta href="{install_href}"{install_target}>{install_label}</a>
       </nav>
-      <div class="header-actions"><a class="button button-header" data-install-cta href="{root}install/index.html#ajouter">Installer FreeGameDrop <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
+      <div class="header-actions"><a class="button button-header" data-install-cta href="{install_href}"{install_target}>{install_label} <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
     </div>
   </header>
 {body}
