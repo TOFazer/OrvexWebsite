@@ -33,6 +33,7 @@ python3 scripts/check_site.py
 | `/` | Présentation OverX et FreeGameDrop |
 | `/discord-bots/` | Catalogue des bots |
 | `/discord-bots/freegamedrop/` | Fonctionnalités et configuration du bot |
+| `/install/` | Parcours guidé d'installation Discord, permissions et dépannage |
 | `/docs/` | Installation, permissions, commandes et FAQ |
 | `/status/` | État de disponibilité, sans faux indicateurs verts |
 | `/roadmap/` | Étapes prévues, sans dates promises |
@@ -42,7 +43,7 @@ python3 scripts/check_site.py
 
 ## Configurer l'installation Discord
 
-Le bouton d'installation reste volontairement inactif tant que l'identifiant public de la bonne application Discord n'est pas fourni. Modifie `assets/site-config.js` :
+Le parcours d'installation est guidé, mais le bouton qui ouvre réellement Discord reste désactivé tant que l'invitation de l'application de production n'est pas renseignée. Les autres CTA renvoient vers le guide au lieu d'un lien cassé. Modifie `assets/site-config.js` :
 
 ```js
 window.OVERX_CONFIG = Object.freeze({

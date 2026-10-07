@@ -22,7 +22,7 @@
 
     nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && nav.classList.contains("is-open")) {
         closeMenu();
         menuButton.focus();
       }
@@ -50,7 +50,7 @@
     if (suppliedUrl) return suppliedUrl;
 
     const clientId = String(config.discordApplicationId || "").trim();
-    // Discord Application IDs are public identifiers, not secrets.
+    // A Discord Application ID is public; bot tokens and OAuth client secrets are not.
     if (!/^\d{17,20}$/.test(clientId)) return null;
 
     const url = new URL("https://discord.com/oauth2/authorize");
@@ -69,32 +69,96 @@
     }
   }
 
+  function enableDiscordLink(element, url) {
+    element.href = url;
+    element.target = "_blank";
+    element.rel = "noopener noreferrer";
+    element.removeAttribute("aria-disabled");
+    element.removeAttribute("aria-label");
+    element.removeAttribute("title");
+    element.classList.remove("is-unavailable");
+    element.addEventListener("click", () => {
+      if (nav?.classList.contains("is-open")) {
+        nav.classList.remove("is-open");
+        menuButton?.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  function disableDirectDiscordLink(element) {
+    element.href = "#ajouter";
+    element.removeAttribute("target");
+    element.removeAttribute("rel");
+    element.setAttribute("aria-disabled", "true");
+    element.setAttribute("aria-label", "Invitation Discord de production à configurer");
+    element.setAttribute("title", "Le lien officiel de l'application PROD doit être ajouté par l'équipe OverX.");
+    element.classList.add("is-unavailable");
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (announcer) announcer.textContent = "Le lien d'invitation de production n'est pas encore configuré. Le bouton sera activé dès que l'URL OAuth2 officielle sera ajoutée.";
+    });
+  }
+
   const installUrl = getInstallUrl();
+
+  // General install CTAs open Discord directly once the production link is configured.
+  // Until then, they lead to a helpful install guide instead of a broken or fake URL.
   document.querySelectorAll("[data-install-cta]").forEach((link) => {
     if (installUrl) {
-      link.href = installUrl;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.removeAttribute("aria-disabled");
-      link.removeAttribute("role");
+      enableDiscordLink(link, installUrl);
       link.setAttribute("aria-label", "Ajouter FreeGameDrop à un serveur Discord");
       replaceLabel(link, "Ajouter à Discord");
     } else {
-      link.href = "#installation";
-      link.setAttribute("aria-disabled", "true");
-      link.setAttribute("aria-label", "Lien d'installation Discord de FreeGameDrop à configurer");
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (announcer) announcer.textContent = "Le lien d'installation Discord n'est pas encore configuré. Renseignez l'Application ID publique dans assets/site-config.js.";
-      });
-      replaceLabel(link, "Lien d'installation à configurer");
+      link.removeAttribute("aria-disabled");
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+      link.setAttribute("aria-label", "Ouvrir le guide d'installation de FreeGameDrop");
+      replaceLabel(link, "Guide d'installation");
+    }
+  });
+
+  // The prominent button on the install page is the actual OAuth action.
+  document.querySelectorAll("[data-discord-install]").forEach((link) => {
+    if (installUrl) {
+      enableDiscordLink(link, installUrl);
+      link.setAttribute("aria-label", "Ajouter FreeGameDrop à un serveur Discord");
+      replaceLabel(link, "Ajouter à Discord");
+    } else {
+      disableDirectDiscordLink(link);
+      replaceLabel(link, "Invitation de production à configurer");
     }
   });
 
   document.querySelectorAll("[data-install-status]").forEach((element) => {
     element.textContent = installUrl
-      ? "Invitation Discord configurée. L'ajout se fait sur les serveurs où tu as les permissions nécessaires."
-      : "Le lien d'invitation Discord n'a pas encore été communiqué.";
+      ? "Le lien officiel d'installation est configuré. Discord te demandera ensuite de choisir le serveur et d'autoriser les permissions."
+      : "Le lien OAuth2 de l'application FreeGameDrop PROD n'a pas encore été fourni. Les autres boutons ouvrent ce guide plutôt qu'un lien non vérifié.";
+  });
+
+  document.querySelectorAll("[data-copy-admin]").forEach((button) => {
+    if (!installUrl) return;
+    button.hidden = false;
+    button.addEventListener("click", async () => {
+      const message = `Peux-tu ajouter FreeGameDrop à notre serveur Discord ? Il faut la permission « Gérer le serveur » pour autoriser l'application. Voici le lien officiel : ${installUrl}`;
+      try {
+        await navigator.clipboard.writeText(message);
+        if (announcer) announcer.textContent = "Message d'installation copié. Tu peux l'envoyer à un administrateur du serveur.";
+        button.textContent = "Message copié ✓";
+      } catch {
+        if (announcer) announcer.textContent = "La copie automatique n'a pas fonctionné. Tu peux partager le lien d'invitation directement.";
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-install-state]").forEach((element) => {
+    const textNode = Array.from(element.childNodes).find((node) => node.nodeType === Node.TEXT_NODE);
+    if (installUrl) {
+      element.classList.remove("status-neutral");
+      element.classList.add("status-current");
+      if (textNode) textNode.nodeValue = " Invitation prête";
+    } else if (textNode) {
+      textNode.nodeValue = " Lien de production à configurer";
+    }
   });
 
   document.querySelectorAll("[data-current-year]").forEach((element) => {

@@ -11,6 +11,7 @@ EXPECTED_PAGES = [
     "index.html",
     "discord-bots/index.html",
     "discord-bots/freegamedrop/index.html",
+    "install/index.html",
     "docs/index.html",
     "status/index.html",
     "roadmap/index.html",

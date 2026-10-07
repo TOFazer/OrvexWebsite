@@ -22,7 +22,7 @@ PAGES: list[dict[str, str]] = [
       <p class="hero-lead">OverX rassemble des outils utiles, simples à prendre en main et pensés pour les communautés Discord. Le premier : <strong>FreeGameDrop</strong>, pour ne plus passer à côté des jeux gratuits.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="{{ROOT}}discord-bots/index.html">Découvrir les bots <span aria-hidden="true">↗</span></a>
-        <a class="button button-secondary" href="{{ROOT}}support/index.html">Contacter le support</a>
+        <a class="button button-secondary" data-install-cta href="{{ROOT}}install/index.html#ajouter">Guide d'installation <span aria-hidden="true">↗</span></a>
       </div>
       <div class="hero-caption"><span class="caption-check" aria-hidden="true">✓</span> Un seul bot présenté aujourd'hui. Les suivants arriveront quand ils seront prêts.</div>
     </div>
@@ -78,7 +78,7 @@ PAGES: list[dict[str, str]] = [
         <div class="chip-row"><span class="chip">Epic Games Store</span><span class="chip">GamerPower</span><span class="chip">Favoris & alertes</span></div>
         <div class="card-actions">
           <a class="button button-primary" href="{{ROOT}}discord-bots/freegamedrop/index.html">Voir FreeGameDrop <span aria-hidden="true">↗</span></a>
-<a class="button button-outline" data-install-cta href="{{ROOT}}discord-bots/freegamedrop/index.html#installation" aria-disabled="true">Lien d'installation à configurer</a>
+<a class="button button-outline" data-install-cta href="{{ROOT}}install/index.html#ajouter">Guide d'installation <span aria-hidden="true">↗</span></a>
         </div>
         <p class="micro-note" data-install-status>Le lien d'invitation Discord n'a pas encore été communiqué.</p>
       </div>
@@ -136,7 +136,7 @@ PAGES: list[dict[str, str]] = [
         <h2>FreeGameDrop</h2>
         <p>Repère les jeux gratuits à partir de sources comme GamerPower et l'Epic Games Store, puis aide chaque membre à suivre les plateformes et offres qui l'intéressent.</p>
         <ul class="check-list"><li>Surveillance périodique des offres</li><li>Préférences par plateforme et type d'offre</li><li>Favoris, recherche et rappels</li></ul>
-        <div class="catalogue-actions"><a class="button button-primary" href="{{ROOT}}discord-bots/freegamedrop/index.html">Voir la fiche complète <span aria-hidden="true">↗</span></a><a class="button button-outline" data-install-cta href="{{ROOT}}discord-bots/freegamedrop/index.html#installation" aria-disabled="true">Lien d'installation à configurer</a></div>
+        <div class="catalogue-actions"><a class="button button-primary" href="{{ROOT}}discord-bots/freegamedrop/index.html">Voir la fiche complète <span aria-hidden="true">↗</span></a><a class="button button-outline" data-install-cta href="{{ROOT}}install/index.html#ajouter">Guide d'installation <span aria-hidden="true">↗</span></a></div>
         <p class="micro-note" data-install-status>Application ID / invitation publique à renseigner dans la configuration du site.</p>
       </div>
     </article>
@@ -160,7 +160,7 @@ PAGES: list[dict[str, str]] = [
       <h1>Ne rate plus<br><span>les jeux gratuits.</span></h1>
       <p class="hero-lead">FreeGameDrop surveille des offres de jeux et les annonce dans ton serveur Discord. Chaque membre peut ensuite choisir ses plateformes, filtrer le catalogue et garder ses offres favorites.</p>
       <div class="hero-actions">
-        <a class="button button-primary" data-install-cta href="#installation" aria-disabled="true">Lien d'installation à configurer <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" data-install-cta href="{{ROOT}}install/index.html#ajouter">Guide d'installation <span aria-hidden="true">↗</span></a>
         <a class="button button-secondary" href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">Voir le code source</a>
       </div>
       <p class="micro-note" data-install-status>L'invitation publique n'est pas encore renseignée. Le bouton d'installation restera inactif jusque-là.</p>
@@ -210,6 +210,69 @@ PAGES: list[dict[str, str]] = [
 
   <section class="section container">
     <div class="privacy-callout"><div class="callout-icon" aria-hidden="true">⌑</div><div><p class="eyebrow">DONNÉES & CONFIDENTIALITÉ</p><h2>Pas de collecte de messages.</h2><p>La documentation du bot indique qu'il ne stocke pas le contenu des messages. Il conserve toutefois certaines données de configuration et de préférences nécessaires au service. Consulte la politique de confidentialité provisoire pour le détail.</p><a class="text-link" href="{{ROOT}}privacy/index.html">Lire la politique de confidentialité <span aria-hidden="true">→</span></a></div></div>
+  </section>
+</main>
+""",
+    },
+    {
+        "path": "install/index.html",
+        "title": "Installer FreeGameDrop sur Discord — OverX",
+        "description": "Guide pas à pas pour ajouter FreeGameDrop à un serveur Discord : autoriser l'application, sélectionner son serveur et lancer la configuration.",
+        "active": "install",
+        "body": r"""
+<main id="main-content">
+  <section class="install-hero container">
+    <div class="install-copy">
+      <p class="eyebrow"><a href="{{ROOT}}discord-bots/freegamedrop/index.html">FREEGAMEDROP</a> <span class="crumb-slash">/</span> INSTALLATION</p>
+      <span class="status-pill status-neutral install-state" data-install-state><span></span> Lien de production à configurer</span>
+      <h1>Sur ton serveur.<br><span>En quelques étapes.</span></h1>
+      <p class="hero-lead">Le parcours est celui de Discord : autoriser le bot, choisir un serveur, puis lancer son assistant de configuration. Pas de compte OverX à créer.</p>
+      <div class="install-copy-actions"><a class="button button-primary install-main-cta" data-discord-install href="#ajouter" aria-disabled="true">Invitation Discord à configurer <span aria-hidden="true">↗</span></a><button class="button button-secondary copy-admin-button" data-copy-admin type="button" hidden>Copier un message pour mon admin</button></div>
+      <p class="install-live-note" data-install-status>Le lien officiel de l'application PROD n'a pas encore été renseigné.</p>
+    </div>
+    <div class="install-flow-card" aria-label="Les trois étapes de l'installation">
+      <div class="install-flow-header"><span class="flow-logo">FG<span>D</span></span><div><strong>Installation FreeGameDrop</strong><small>Parcours dans Discord</small></div><span class="flow-lock" aria-hidden="true">⌑</span></div>
+      <div class="flow-step"><span class="flow-number">01</span><span class="flow-icon">↗</span><div><strong>Autoriser l'application</strong><small>Discord affiche les permissions demandées</small></div><span class="flow-check">✓</span></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><span class="flow-number">02</span><span class="flow-icon icon-cyan">⌂</span><div><strong>Choisir ton serveur</strong><small>Il faut pouvoir gérer le serveur</small></div><span class="flow-check">✓</span></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><span class="flow-number">03</span><span class="flow-icon icon-lime">⚙</span><div><strong>Lancer <code>/setup-auto</code></strong><small>Choisis les plateformes à suivre</small></div><span class="flow-check">✓</span></div>
+      <div class="install-flow-footer"><span class="tiny-pulse"></span> Tu restes sur le parcours officiel Discord</div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="ajouter">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">INSTALLATION, PAS À PAS</p><h2>Tu sais déjà utiliser Discord ?<br><span>Tu peux installer le bot.</span></h2><p class="section-intro">Suis ces étapes dans l'ordre. Si tu bloques à l'étape 2, ce n'est probablement pas toi : Discord réserve l'ajout d'applications aux membres qui peuvent gérer le serveur.</p></div>
+      <div class="install-steps-grid">
+        <article class="install-step-card"><span class="install-step-index">ÉTAPE 01</span><div class="install-step-icon">↗</div><h3>Clique sur Ajouter à Discord</h3><p>Le bouton ouvre la page d'autorisation officielle de Discord. Connecte-toi au compte qui gère ton serveur si Discord te le demande.</p></article>
+        <article class="install-step-card"><span class="install-step-index">ÉTAPE 02</span><div class="install-step-icon icon-cyan">⌂</div><h3>Sélectionne ton serveur</h3><p>Choisis le serveur dans la liste. Il faut la permission <strong>Gérer le serveur</strong> ou <strong>Administrateur</strong>. Si le serveur n'apparaît pas, demande à un admin de faire l'installation.</p></article>
+        <article class="install-step-card"><span class="install-step-index">ÉTAPE 03</span><div class="install-step-icon icon-lime">✓</div><h3>Autorise puis configure</h3><p>Vérifie les permissions affichées par Discord, clique sur <strong>Autoriser</strong>, puis lance <code>/setup-auto</code> dans le serveur pour créer les salons de jeux.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="install-permissions-layout">
+      <div><p class="eyebrow">PERMISSIONS AFFICHÉES PAR DISCORD</p><h2>Le minimum utile<br><span>pour faire fonctionner le bot.</span></h2><p class="section-intro">FreeGameDrop doit pouvoir créer les espaces de jeux et publier les offres. Discord t'affichera la demande avant l'ajout.</p></div>
+      <div class="install-permissions-card"><div class="permission-heading"><span class="permission-discord-icon">◉</span><div><strong>Permissions du serveur</strong><small>Demandées lors de l'ajout</small></div></div><div class="permission-check-row"><span>✓</span> Gérer les salons</div><div class="permission-check-row"><span>✓</span> Gérer les rôles de plateforme</div><div class="permission-check-row"><span>✓</span> Voir les salons</div><div class="permission-check-row"><span>✓</span> Envoyer des messages et intégrer des liens</div><p class="permission-footnote">Ces permissions correspondent à l'invitation documentée dans le dépôt fourni. Discord reste l'écran de confirmation officiel.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container install-help-layout">
+      <div><p class="eyebrow">ÇA NE MARCHE PAS ?</p><h2>Les blocages<br><span>les plus fréquents.</span></h2><p class="section-intro">Une aide directe plutôt qu'un écran d'erreur incompréhensible.</p></div>
+      <div class="install-help-list">
+        <details class="faq-item"><summary>Mon serveur n'apparaît pas dans Discord.</summary><p>Ton compte n'a probablement pas la permission de gérer ce serveur. Demande à un administrateur ou à un membre ayant « Gérer le serveur » de lancer l'invitation.</p></details>
+        <details class="faq-item"><summary>Le bot est ajouté, mais aucun salon n'a été créé.</summary><p>L'installation ajoute l'application au serveur; la configuration des salons se lance ensuite avec <code>/setup-auto</code>. Le bot doit être en ligne et conserver les permissions nécessaires.</p></details>
+        <details class="faq-item"><summary>Discord refuse une permission ou l'invitation semble incorrecte.</summary><p>Ne tente pas d'utiliser l'application de développement. L'équipe doit renseigner ici le lien OAuth2 de production vérifié. Tant qu'il n'est pas configuré, le bouton reste désactivé.</p></details>
+        <details class="faq-item"><summary>Je suis sur téléphone.</summary><p>Le même bouton ouvre Discord ou son navigateur. Connecte-toi au bon compte, choisis le serveur, puis confirme l'autorisation. Si tu ne peux pas gérer le serveur, demande à son administrateur.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="install-bottom-cta"><div><p class="eyebrow">BESOIN D'UN COUP DE MAIN ?</p><h2>On t'accompagne.</h2><p>Consulte le guide complet ou signale un problème dans le dépôt du bot. Ne publie jamais de token Discord.</p></div><div class="install-bottom-actions"><a class="button button-primary" href="{{ROOT}}docs/index.html#installation">Lire le guide complet <span aria-hidden="true">→</span></a><a class="text-link" href="{{ROOT}}support/index.html">Contacter le support <span aria-hidden="true">→</span></a></div></div>
   </section>
 </main>
 """,
@@ -460,7 +523,7 @@ def render_footer(root: str) -> str:
   <footer class="site-footer">
     <div class="container footer-main">
       <div class="footer-brand-block"><a class="brand" href="{root}index.html" aria-label="OverX — accueil"><img src="{root}assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a></div>
-      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="{root}discord-bots/index.html">Nos bots</a><a href="{root}docs/index.html">Documentation</a><a href="{root}status/index.html">Statut des services</a><a href="{root}changelog/index.html">Changelog</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="{root}support/index.html">Support</a><a href="{root}roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="{root}privacy/index.html">Confidentialité</a><a href="{root}terms/index.html">Conditions</a><a href="{root}legal/index.html">Mentions légales</a></div></div>
+      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="{root}discord-bots/index.html">Nos bots</a><a href="{root}install/index.html">Installer FreeGameDrop</a><a href="{root}docs/index.html">Documentation</a><a href="{root}status/index.html">Statut des services</a><a href="{root}changelog/index.html">Changelog</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="{root}support/index.html">Support</a><a href="{root}roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="{root}privacy/index.html">Confidentialité</a><a href="{root}terms/index.html">Conditions</a><a href="{root}legal/index.html">Mentions légales</a></div></div>
     </div>
     <div class="container footer-bottom"><span>© <span data-current-year>2026</span> OverX · Projet indépendant</span><span class="footer-transparency"><span class="footer-dot"></span> Pas de statistiques non vérifiées</span></div>
   </footer>
@@ -502,9 +565,9 @@ def render_page(page: dict[str, str]) -> str:
       <a class="brand" href="{root}index.html" aria-label="OverX — accueil"><img src="{root}assets/brand-mark.svg" alt="" width="36" height="36"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a>
       <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Navigation principale">
         {nav}
-        <a class="mobile-nav-cta" data-install-cta href="{root}discord-bots/freegamedrop/index.html#installation" aria-disabled="true">Lien d'installation à configurer</a>
+        <a class="mobile-nav-cta" data-install-cta href="{root}install/index.html#ajouter">Guide d'installation</a>
       </nav>
-      <div class="header-actions"><a class="button button-header" data-install-cta href="{root}discord-bots/freegamedrop/index.html#installation" aria-disabled="true">Installation à configurer <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
+      <div class="header-actions"><a class="button button-header" data-install-cta href="{root}install/index.html#ajouter">Installer FreeGameDrop <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
     </div>
   </header>
 {body}
