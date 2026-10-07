@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090a11">
 
-  <meta name="description" content="Parcourez le catalogue OverX. Découvrez FreeGameDrop et les prochaines applications Discord lorsqu&#x27;elles seront prêtes.">
+  <meta name="description" content="Parcourez le catalogue OverX : recherchez par nom ou catégorie, découvrez FreeGameDrop et les prochaines applications Discord lorsqu&#x27;elles seront prêtes.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OverX">
-  <meta property="og:title" content="Bots Discord — OverX">
-  <meta property="og:description" content="Parcourez le catalogue OverX. Découvrez FreeGameDrop et les prochaines applications Discord lorsqu&#x27;elles seront prêtes.">
-  <title>Bots Discord — OverX</title>
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Catalogue de bots Discord — OverX">
+  <meta property="og:description" content="Parcourez le catalogue OverX : recherchez par nom ou catégorie, découvrez FreeGameDrop et les prochaines applications Discord lorsqu&#x27;elles seront prêtes.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Catalogue de bots Discord — OverX">
+  <meta name="twitter:description" content="Parcourez le catalogue OverX : recherchez par nom ou catégorie, découvrez FreeGameDrop et les prochaines applications Discord lorsqu&#x27;elles seront prêtes.">
+  <title>Catalogue de bots Discord — OverX</title>
   <link rel="icon" type="image/svg+xml" href="../assets/brand-mark.svg">
   <link rel="stylesheet" href="../assets/css/site.css">
+  <script type="application/ld+json">{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"../index.html"},{"@type":"ListItem","position":2,"name":"Bots","item":"../discord-bots/index.html"}]}</script>
   <script src="../assets/site-config.js" defer></script>
   <script src="../assets/js/site.js" defer></script>
 </head>
@@ -37,21 +42,34 @@
     <p class="eyebrow"><a href="../index.html">OVERX</a> <span class="crumb-slash">/</span> CATALOGUE</p>
     <h1>Des bots utiles.<br><span>Pas une liste de promesses.</span></h1>
     <p class="hero-lead narrow">Voici les applications réellement documentées aujourd'hui. Les prochains bots seront annoncés quand ils auront un nom, des fonctionnalités et une disponibilité confirmés.</p>
-    <div class="catalogue-meta"><span class="catalogue-dot"></span> 1 bot présenté <span class="meta-divider"></span> Catalogue en construction</div>
+    <div class="catalogue-meta"><span class="catalogue-dot"></span> <span data-bot-count>1</span> bot présenté <span class="meta-divider"></span> Catalogue en construction</div>
   </section>
 
   <section class="section container section-compact">
-    <article class="catalogue-card">
-      <div class="catalogue-visual"><div class="catalogue-visual-grid"></div><div class="catalogue-logo">FG<span>D</span></div><div class="catalogue-stamp">FREE<br>GAME<br>DROP</div><div class="catalogue-orbit"></div><span class="catalogue-tag">01 · GAMING</span></div>
-      <div class="catalogue-content">
-        <div class="catalogue-top"><span class="eyebrow">JEUX GRATUITS · ALERTES DISCORD</span><span class="status-pill status-neutral"><span></span> Instance publique à confirmer</span></div>
-        <h2>FreeGameDrop</h2>
-        <p>Repère les jeux gratuits à partir de sources comme GamerPower et l'Epic Games Store, puis aide chaque membre à suivre les plateformes et offres qui l'intéressent.</p>
-        <ul class="check-list"><li>Surveillance périodique des offres</li><li>Préférences par plateforme et type d'offre</li><li>Favoris, recherche et rappels</li></ul>
-        <div class="catalogue-actions"><a class="button button-primary" href="../discord-bots/freegamedrop/index.html">Voir la fiche complète <span aria-hidden="true">↗</span></a><a class="button button-outline" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a></div>
-        <p class="micro-note" data-install-status>Le bouton ouvre l'invitation OAuth2 fournie pour l'application de production.</p>
+    <div class="catalogue-toolbar">
+      <label class="catalogue-search"><span aria-hidden="true">⌕</span><input type="search" data-catalogue-search placeholder="Rechercher un bot…" aria-label="Rechercher un bot dans le catalogue"></label>
+      <div class="catalogue-filters" role="group" aria-label="Filtrer par catégorie">
+        <button class="filter-chip is-active" type="button" data-catalogue-filter="all">Tous</button>
+        <button class="filter-chip" type="button" data-catalogue-filter="gaming">Gaming</button>
+        <button class="filter-chip" type="button" data-catalogue-filter="moderation">Modération</button>
+        <button class="filter-chip" type="button" data-catalogue-filter="utility">Utilitaire</button>
+        <button class="filter-chip" type="button" data-catalogue-filter="fun">Fun</button>
       </div>
-    </article>
+    </div>
+    <div class="catalogue-grid" data-catalogue-grid>
+      <article class="catalogue-card catalogue-card-compact" data-bot-card data-category="gaming" data-search="freegamedrop jeux gratuits steam epic games store gog ubisoft alertes offres gaming">
+        <div class="catalogue-visual"><div class="catalogue-visual-grid"></div><div class="catalogue-logo">FG<span>D</span></div><div class="catalogue-stamp">FREE<br>GAME<br>DROP</div><div class="catalogue-orbit"></div><span class="catalogue-tag">01 · GAMING</span></div>
+        <div class="catalogue-content">
+          <div class="catalogue-top"><span class="eyebrow">JEUX GRATUITS · ALERTES DISCORD</span><span class="status-pill status-neutral"><span></span> Instance publique à confirmer</span></div>
+          <h2>FreeGameDrop</h2>
+          <p>Repère les jeux gratuits sur Steam, l'Epic Games Store, GOG et Ubisoft, puis aide chaque membre à suivre uniquement les plateformes et offres qui l'intéressent.</p>
+          <ul class="check-list"><li>Veille automatique toutes les heures, multi-sources résiliente</li><li>Rôles, salons et panneau de sélection créés par /setup-auto</li><li>Favoris, recherche, préférences et rappels d'expiration</li></ul>
+          <div class="catalogue-actions"><a class="button button-primary" href="../discord-bots/freegamedrop/index.html">Voir la fiche complète <span aria-hidden="true">↗</span></a><a class="button button-outline" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a></div>
+          <p class="micro-note" data-install-status>Le bouton ouvre l'invitation OAuth2 fournie pour l'application de production.</p>
+        </div>
+      </article>
+      <p class="catalogue-empty" data-catalogue-empty hidden>Aucun bot ne correspond à cette recherche pour le moment.</p>
+    </div>
 
     <div class="future-panel"><div class="future-lock" aria-hidden="true">⌑</div><div><p class="eyebrow">LA SUITE DE L'ÉCOSYSTÈME</p><h2>Les autres bots arrivent<br><span>quand ils seront prêts.</span></h2><p>Aucun bot fictif ni compteur de lancement : cette page s'enrichira au fil des projets réellement publiés.</p></div><a class="text-link" href="../roadmap/index.html">Voir la feuille de route <span aria-hidden="true">→</span></a></div>
   </section>
@@ -59,8 +77,11 @@
 
   <footer class="site-footer">
     <div class="container footer-main">
-      <div class="footer-brand-block"><a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a></div>
-      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../discord-bots/index.html">Nos bots</a><a href="../install/index.html">Installer FreeGameDrop</a><a href="../docs/index.html">Documentation</a><a href="../status/index.html">Statut des services</a><a href="../changelog/index.html">Changelog</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../support/index.html">Support</a><a href="../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../privacy/index.html">Confidentialité</a><a href="../terms/index.html">Conditions</a><a href="../legal/index.html">Mentions légales</a></div></div>
+      <div class="footer-brand-block"><a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a><a class="footer-github" data-community-cta href="#" hidden>Rejoindre le Discord communautaire <span aria-hidden="true">↗</span></a></div>
+      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../discord-bots/index.html">Nos bots</a><a href="../install/index.html">Installer FreeGameDrop</a><a href="../docs/index.html">Documentation</a><a href="../status/index.html">Statut des services</a><a href="../changelog/index.html">Changelog</a></div><div><p class="footer-label">PLATEFORMES</p><a href="../discord-bots/freegamedrop/steam/index.html">Jeux gratuits Steam</a>
+<a href="../discord-bots/freegamedrop/epic-games/index.html">Jeux gratuits Epic Games Store</a>
+<a href="../discord-bots/freegamedrop/gog/index.html">Jeux gratuits GOG</a>
+<a href="../discord-bots/freegamedrop/ubisoft/index.html">Jeux gratuits Ubisoft</a><a href="../discord-bots/freegamedrop/auto-hebergement/index.html">Auto-hébergement</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../support/index.html">Support</a><a href="../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../privacy/index.html">Confidentialité</a><a href="../terms/index.html">Conditions</a><a href="../legal/index.html">Mentions légales</a></div></div>
     </div>
     <div class="container footer-bottom"><span>© <span data-current-year>2026</span> OverX · Projet indépendant</span><span class="footer-transparency"><span class="footer-dot"></span> Pas de statistiques non vérifiées</span></div>
   </footer>

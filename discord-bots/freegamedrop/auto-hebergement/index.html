@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a11">
+
+  <meta name="description" content="FreeGameDrop est open source sous licence MIT : installation Python ou Docker, variables d&#x27;environnement, séparation DEV/PROD, tableau de bord web et endpoints /api/health et /api/stats documentés.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OverX">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Auto-héberger FreeGameDrop — bot Discord open source (MIT) | OverX">
+  <meta property="og:description" content="FreeGameDrop est open source sous licence MIT : installation Python ou Docker, variables d&#x27;environnement, séparation DEV/PROD, tableau de bord web et endpoints /api/health et /api/stats documentés.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Auto-héberger FreeGameDrop — bot Discord open source (MIT) | OverX">
+  <meta name="twitter:description" content="FreeGameDrop est open source sous licence MIT : installation Python ou Docker, variables d&#x27;environnement, séparation DEV/PROD, tableau de bord web et endpoints /api/health et /api/stats documentés.">
+  <title>Auto-héberger FreeGameDrop — bot Discord open source (MIT) | OverX</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/brand-mark.svg">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+  <script type="application/ld+json">{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"../../../index.html"},{"@type":"ListItem","position":2,"name":"Bots","item":"../../../discord-bots/index.html"},{"@type":"ListItem","position":3,"name":"FreeGameDrop","item":"../../../discord-bots/freegamedrop/index.html"},{"@type":"ListItem","position":4,"name":"Auto-hébergement","item":"../../../discord-bots/freegamedrop/auto-hebergement/index.html"}]}</script>
+  <script src="../../../assets/site-config.js" defer></script>
+  <script src="../../../assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../../index.html" aria-label="OverX — accueil"><img src="../../../assets/brand-mark.svg" alt="" width="36" height="36"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a>
+      <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Navigation principale">
+        <a href="../../../index.html">Accueil</a>
+        <a href="../../../discord-bots/index.html" aria-current="page">Bots</a>
+        <a href="../../../docs/index.html">Documentation</a>
+        <a href="../../../status/index.html">Statut</a>
+        <a href="../../../roadmap/index.html">Roadmap</a>
+        <a class="mobile-nav-cta" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord</a>
+      </nav>
+      <div class="header-actions"><a class="button button-header" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
+    </div>
+  </header>
+<main id="main-content">
+  <section class="page-hero container">
+    <p class="eyebrow"><a href="../../../discord-bots/freegamedrop/index.html">FREEGAMEDROP</a> <span class="crumb-slash">/</span> AUTO-HÉBERGEMENT</p>
+    <h1>Ton instance.<br><span>Ton bot.</span></h1>
+    <p class="hero-lead narrow">FreeGameDrop est publié sous licence MIT : le code se lit, se vérifie et s'héberge librement, en Python ou avec Docker. Cette page résume le guide du dépôt FreeGameDropDev.</p>
+  </section>
+  <section class="section container section-compact docs-layout">
+    <aside class="docs-toc"><p class="eyebrow">DANS CE GUIDE</p><a href="#demarrage">Démarrage express</a><a href="#docker">Docker & PaaS</a><a href="#env">DEV / PROD</a><a href="#dashboard">Tableau de bord web</a><a href="#api">Relier ce site</a></aside>
+    <div class="docs-content">
+      <section class="doc-section" id="demarrage"><p class="eyebrow">01 · DÉMARRER</p><h2>Installation express</h2><p>Prérequis : Python 3.10 ou plus. Le dépôt contient <code>requirements.txt</code>, un modèle <code>.env.example</code> et la commande <code>/setup-auto</code> qui crée salons, rôles et panneau dès la première exécution.</p><div class="code-block"><pre><code>git clone https://github.com/TOFazer/FreeGameDropDev.git
+cd FreeGameDropDev
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # puis colle ton token Discord
+python main.py</code></pre></div><p>Aucun intent privilégié n'est nécessaire. La vérification des offres démarre immédiatement, puis continue toutes les heures.</p></section>
+      <section class="doc-section" id="docker"><p class="eyebrow">02 · HÉBERGER EN CONTINU</p><h2>Docker ou PaaS</h2><p>Un bot doit tourner en permanence. Le dépôt fournit un <code>Dockerfile</code> (base SQLite dans <code>/app/data</code>, à monter sur un volume) et un <code>docker-compose.dev.yml</code> pour l'environnement de développement. Les PaaS type Railway, Render ou Fly.io détectent le Dockerfile automatiquement.</p><div class="code-block"><pre><code>docker build -t freegamedrop .
+docker run -d --env-file .env \
+  -v freegamedrop-prod-data:/app/data \
+  --restart unless-stopped freegamedrop</code></pre></div></section>
+      <section class="doc-section" id="env"><p class="eyebrow">03 · BONNES PRATIQUES</p><h2>DEV et PROD séparés</h2><p>Le même code, jamais les mêmes ressources : application Discord, token et base SQLite distincts. Au démarrage, le bot refuse de se lancer si le jeton, l'application ou la base ne correspondent pas à l'environnement déclaré — impossible de connecter un token DEV sur la base de production.</p><div class="notice notice-warn"><strong>Secrets</strong><p><code>DISCORD_TOKEN</code>, <code>DISCORD_CLIENT_SECRET</code> et <code>DATABASE_URL</code> restent côté serveur. Ce site statique ne doit jamais les contenir.</p></div></section>
+      <section class="doc-section" id="dashboard"><p class="eyebrow">04 · OPTIONNEL</p><h2>Tableau de bord web</h2><p>Un serveur web optionnel (aiohttp, déjà dans les dépendances) ajoute « Se connecter avec Discord » (scopes <code>identify guilds</code> uniquement), la configuration des serveurs gérables, les statistiques publiques et l'état mesuré. Le jeton OAuth du membre n'est jamais stocké.</p></section>
+      <section class="doc-section" id="api"><p class="eyebrow">05 · RELIER CE SITE</p><h2>Publier tes vrais chiffres</h2><p>Le tableau de bord expose <code>GET /api/stats</code> et <code>GET /api/health</code> en JSON, sans aucun secret. Renseigne <code>statsApiUrl</code> et <code>healthApiUrl</code> dans <code>assets/site-config.js</code> : les compteurs de l'accueil et la page Statut afficheront les mesures réelles de ton instance — jamais de valeur inventée en attendant.</p><a class="button button-secondary" href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">Lire le README du bot <span aria-hidden="true">↗</span></a></section>
+    </div>
+  </section>
+</main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand-block"><a class="brand" href="../../../index.html" aria-label="OverX — accueil"><img src="../../../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a><a class="footer-github" data-community-cta href="#" hidden>Rejoindre le Discord communautaire <span aria-hidden="true">↗</span></a></div>
+      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../../../discord-bots/index.html">Nos bots</a><a href="../../../install/index.html">Installer FreeGameDrop</a><a href="../../../docs/index.html">Documentation</a><a href="../../../status/index.html">Statut des services</a><a href="../../../changelog/index.html">Changelog</a></div><div><p class="footer-label">PLATEFORMES</p><a href="../../../discord-bots/freegamedrop/steam/index.html">Jeux gratuits Steam</a>
+<a href="../../../discord-bots/freegamedrop/epic-games/index.html">Jeux gratuits Epic Games Store</a>
+<a href="../../../discord-bots/freegamedrop/gog/index.html">Jeux gratuits GOG</a>
+<a href="../../../discord-bots/freegamedrop/ubisoft/index.html">Jeux gratuits Ubisoft</a><a href="../../../discord-bots/freegamedrop/auto-hebergement/index.html">Auto-hébergement</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../../../support/index.html">Support</a><a href="../../../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../../../privacy/index.html">Confidentialité</a><a href="../../../terms/index.html">Conditions</a><a href="../../../legal/index.html">Mentions légales</a></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span data-current-year>2026</span> OverX · Projet indépendant</span><span class="footer-transparency"><span class="footer-dot"></span> Pas de statistiques non vérifiées</span></div>
+  </footer>
+  <div class="sr-only" role="status" aria-live="polite" data-site-announcer></div>
+
+</body>
+</html>
