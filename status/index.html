@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090a11">
 
-  <meta name="description" content="État de transparence OverX : aucune sonde publique de disponibilité n&#x27;est connectée pour le moment.">
+  <meta name="description" content="État de transparence OverX : le panneau de santé se branche sur /api/health du bot dès qu&#x27;une URL publique est configurée ; aucune valeur inventée en attendant.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OverX">
+  <meta property="og:locale" content="fr_FR">
   <meta property="og:title" content="Statut des services — OverX">
-  <meta property="og:description" content="État de transparence OverX : aucune sonde publique de disponibilité n&#x27;est connectée pour le moment.">
+  <meta property="og:description" content="État de transparence OverX : le panneau de santé se branche sur /api/health du bot dès qu&#x27;une URL publique est configurée ; aucune valeur inventée en attendant.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Statut des services — OverX">
+  <meta name="twitter:description" content="État de transparence OverX : le panneau de santé se branche sur /api/health du bot dès qu&#x27;une URL publique est configurée ; aucune valeur inventée en attendant.">
   <title>Statut des services — OverX</title>
   <link rel="icon" type="image/svg+xml" href="../assets/brand-mark.svg">
   <link rel="stylesheet" href="../assets/css/site.css">
+  <script type="application/ld+json">{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"../index.html"},{"@type":"ListItem","position":2,"name":"Status","item":"../status/index.html"}]}</script>
   <script src="../assets/site-config.js" defer></script>
   <script src="../assets/js/site.js" defer></script>
 </head>
@@ -36,14 +41,21 @@
   <section class="page-hero container status-hero">
     <p class="eyebrow">OVERX <span class="crumb-slash">/</span> STATUS</p>
     <h1>Un statut clair.<br><span>Même quand il manque des données.</span></h1>
-    <p class="hero-lead narrow">Nous n'affichons pas de pastilles vertes sans vérification. Aucune sonde publique de disponibilité n'est encore raccordée à cette page.</p>
+    <p class="hero-lead narrow">Nous n'affichons pas de pastilles vertes sans vérification. Quand <code>healthApiUrl</code> est renseigné, ce panneau lit <code>/api/health</code> du bot ; sinon tout reste « non mesuré ».</p>
   </section>
   <section class="section container section-compact">
-    <div class="status-summary"><div class="status-summary-icon">—</div><div><p class="eyebrow">ÉTAT ACTUEL DE LA PAGE</p><h2>Non mesuré en temps réel</h2><p>Dernière vérification automatique : <strong>aucune sonde configurée</strong>.</p></div><span class="status-pill status-neutral"><span></span> Données non connectées</span></div>
+    <div class="status-summary"><div class="status-summary-icon">—</div><div><p class="eyebrow">ÉTAT ACTUEL DE LA PAGE</p><h2 data-health-title>Non mesuré en temps réel</h2><p>Dernière vérification automatique : <strong data-health-updated>aucune sonde configurée</strong>.</p></div><span class="status-pill status-neutral"><span></span> Données non connectées</span></div>
+    <div class="health-panel" data-health-panel hidden>
+      <div class="health-row"><span class="health-dot" data-health-dot="bot">?</span><div><strong>Bot</strong><small data-health-text="bot">—</small></div></div>
+      <div class="health-row"><span class="health-dot" data-health-dot="discord">?</span><div><strong>Discord</strong><small data-health-text="discord">—</small></div></div>
+      <div class="health-row"><span class="health-dot" data-health-dot="database">?</span><div><strong>Base de données</strong><small data-health-text="database">—</small></div></div>
+      <div class="health-row"><span class="health-dot" data-health-dot="sources">?</span><div><strong>Sources d'offres</strong><small data-health-text="sources">—</small></div></div>
+      <p class="permission-footnote" data-health-footnote>Source : l'endpoint /api/health public du bot, sans secret.</p>
+    </div>
     <div class="service-list">
       <article class="service-row"><div class="service-indicator indicator-unknown">?</div><div><h3>FreeGameDrop · bot Discord</h3><p>Aucun endpoint public de santé n'a été fourni. Sur un serveur où le bot est installé, <code>/sante</code> est la commande documentée pour vérifier ses composants.</p></div><span class="service-state">NON MESURÉ</span></article>
       <article class="service-row"><div class="service-indicator indicator-unknown">?</div><div><h3>Site OverX</h3><p>Page de statut statique. Elle n'effectue pas de contrôle de disponibilité de l'hébergement.</p></div><span class="service-state">NON MESURÉ</span></article>
-      <article class="service-row"><div class="service-indicator indicator-muted">—</div><div><h3>Dashboard & API OverX</h3><p>Non inclus dans cette première version du site; prévus comme pistes d'évolution.</p></div><span class="service-state">NON DÉPLOYÉS DANS CETTE V1</span></article>
+      <article class="service-row"><div class="service-indicator indicator-muted">—</div><div><h3>Dashboard & API OverX</h3><p>Le tableau de bord du bot expose <code>/api/health</code> et <code>/api/stats</code> : ce site sait les lire dès que l'URL publique est configurée.</p></div><span class="service-state">PRÊT À BRANCHER</span></article>
     </div>
     <div class="notice notice-warn status-note"><strong>Pourquoi pas d'uptime ?</strong><p>Un pourcentage comme « 99,9 % » doit venir d'une mesure horodatée et reproductible. Il sera affiché lorsqu'une sonde et une source de données auront été mises en place.</p></div>
     <div class="status-links"><a class="text-link" href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">Dépôt FreeGameDropDev <span aria-hidden="true">↗</span></a><a class="text-link" href="../support/index.html">Signaler un problème <span aria-hidden="true">→</span></a></div>
@@ -52,8 +64,11 @@
 
   <footer class="site-footer">
     <div class="container footer-main">
-      <div class="footer-brand-block"><a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a></div>
-      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../discord-bots/index.html">Nos bots</a><a href="../install/index.html">Installer FreeGameDrop</a><a href="../docs/index.html">Documentation</a><a href="../status/index.html">Statut des services</a><a href="../changelog/index.html">Changelog</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../support/index.html">Support</a><a href="../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../privacy/index.html">Confidentialité</a><a href="../terms/index.html">Conditions</a><a href="../legal/index.html">Mentions légales</a></div></div>
+      <div class="footer-brand-block"><a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a><a class="footer-github" data-community-cta href="#" hidden>Rejoindre le Discord communautaire <span aria-hidden="true">↗</span></a></div>
+      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../discord-bots/index.html">Nos bots</a><a href="../install/index.html">Installer FreeGameDrop</a><a href="../docs/index.html">Documentation</a><a href="../status/index.html">Statut des services</a><a href="../changelog/index.html">Changelog</a></div><div><p class="footer-label">PLATEFORMES</p><a href="../discord-bots/freegamedrop/steam/index.html">Jeux gratuits Steam</a>
+<a href="../discord-bots/freegamedrop/epic-games/index.html">Jeux gratuits Epic Games Store</a>
+<a href="../discord-bots/freegamedrop/gog/index.html">Jeux gratuits GOG</a>
+<a href="../discord-bots/freegamedrop/ubisoft/index.html">Jeux gratuits Ubisoft</a><a href="../discord-bots/freegamedrop/auto-hebergement/index.html">Auto-hébergement</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../support/index.html">Support</a><a href="../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../privacy/index.html">Confidentialité</a><a href="../terms/index.html">Conditions</a><a href="../legal/index.html">Mentions légales</a></div></div>
     </div>
     <div class="container footer-bottom"><span>© <span data-current-year>2026</span> OverX · Projet indépendant</span><span class="footer-transparency"><span class="footer-dot"></span> Pas de statistiques non vérifiées</span></div>
   </footer>

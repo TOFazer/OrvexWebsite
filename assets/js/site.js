@@ -173,12 +173,179 @@
         document.querySelectorAll("[data-community-cta]").forEach((link) => {
           link.href = url.href;
           link.hidden = false;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
+          if (link.tagName === "A") {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
         });
       }
     } catch {
       // An invalid public invite stays hidden; never render an untrusted URL.
     }
+  }
+
+  // ------------------------------------------------------------------
+  // Share button: Web Share API with clipboard fallback.
+  // ------------------------------------------------------------------
+  document.querySelectorAll("[data-share]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const url = window.location.href;
+      const title = document.title;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title, url });
+          return;
+        }
+        await navigator.clipboard.writeText(url);
+        const previous = button.textContent;
+        button.textContent = "Lien copié ✓";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      } catch {
+        if (announcer) announcer.textContent = "La copie du lien n'a pas fonctionné sur ce navigateur.";
+      }
+    });
+  });
+
+  // ------------------------------------------------------------------
+  // Catalogue: client-side search + category filters over real cards.
+  // ------------------------------------------------------------------
+  const catalogueGrid = document.querySelector("[data-catalogue-grid]");
+  if (catalogueGrid) {
+    const searchInput = document.querySelector("[data-catalogue-search]");
+    const filterButtons = Array.from(document.querySelectorAll("[data-catalogue-filter]"));
+    const cards = Array.from(catalogueGrid.querySelectorAll("[data-bot-card]"));
+    const emptyState = document.querySelector("[data-catalogue-empty]");
+    let activeFilter = "all";
+
+    const normalize = (value) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    const apply = () => {
+      const query = normalize(String(searchInput?.value || "").trim());
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchesCategory = activeFilter === "all" || card.dataset.category === activeFilter;
+        const haystack = normalize(`${card.dataset.search || ""} ${card.textContent || ""}`);
+        const matchesQuery = !query || haystack.includes(query);
+        const shown = matchesCategory && matchesQuery;
+        card.hidden = !shown;
+        if (shown) visible += 1;
+      });
+      if (emptyState) emptyState.hidden = visible !== 0;
+    };
+
+    searchInput?.addEventListener("input", apply);
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.catalogueFilter || "all";
+        filterButtons.forEach((other) => other.classList.toggle("is-active", other === button));
+        apply();
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Public stats & health: only ever displayed when a measured API is
+  // configured and reachable. "—" is the honest default.
+  // ------------------------------------------------------------------
+  const STAT_KEYS = {
+    guilds: ["guilds", "guild_count", "server_count", "servers", "serveurs"],
+    offers: ["offers_detected", "offers_total", "total_offers", "offres_detectees", "offers"],
+    active_offers: ["offers_active", "active_offers", "offres_actives"],
+    uptime: ["uptime_percent", "uptime"],
+  };
+
+  function pickNumber(payload, keys) {
+    if (!payload || typeof payload !== "object") return null;
+    for (const key of keys) {
+      const value = payload[key];
+      if (typeof value === "number" && Number.isFinite(value)) return value;
+      if (typeof value === "string" && value.trim() !== "" && Number.isFinite(Number(value))) return Number(value);
+    }
+    return null;
+  }
+
+  function formatStat(key, value) {
+    if (value == null) return "—";
+    if (key === "uptime") return `${value.toFixed(1).replace(".", ",")} %`;
+    return new Intl.NumberFormat("fr-FR").format(value);
+  }
+
+  async function fetchJson(url, timeoutMs = 6000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, { signal: controller.signal, headers: { Accept: "application/json" } });
+      if (!response.ok) return null;
+      return await response.json();
+    } catch {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  const statsUrl = String(config.statsApiUrl || "").trim();
+  const statNodes = document.querySelectorAll("[data-stat]");
+  if (statsUrl && statNodes.length) {
+    fetchJson(statsUrl).then((payload) => {
+      const note = document.querySelector("[data-stats-note]");
+      if (!payload) {
+        if (note) note.textContent = "L'API de statistiques configurée n'a pas répondu : les compteurs restent à « — » plutôt que d'afficher une valeur incertaine.";
+        return;
+      }
+      statNodes.forEach((node) => {
+        const value = pickNumber(payload, STAT_KEYS[node.dataset.stat] || [node.dataset.stat]);
+        node.textContent = formatStat(node.dataset.stat, value);
+      });
+      if (note) note.textContent = "Chiffres mesurés par l'instance publique du bot, via son API /api/stats.";
+    });
+  }
+
+  const healthUrl = String(config.healthApiUrl || "").trim();
+  const healthPanel = document.querySelector("[data-health-panel]");
+  if (healthUrl && healthPanel) {
+    fetchJson(healthUrl).then((payload) => {
+      const title = document.querySelector("[data-health-title]");
+      const updated = document.querySelector("[data-health-updated]");
+      if (!payload) {
+        if (title) title.textContent = "Sonde configurée mais injoignable";
+        if (updated) updated.textContent = "l'endpoint /api/health n'a pas répondu depuis ce navigateur";
+        return;
+      }
+      healthPanel.hidden = false;
+      if (title) title.textContent = "Mesuré en temps réel";
+      const stamp = payload.checked_at || payload.last_check || payload.updated_at || payload.timestamp;
+      if (updated) updated.textContent = stamp ? `dernière vérification : ${String(stamp)}` : "dernière vérification : à l'instant";
+
+      const setDot = (name, state) => {
+        const dot = document.querySelector(`[data-health-dot="${name}"]`);
+        const text = document.querySelector(`[data-health-text="${name}"]`);
+        const ok = state === "ok" || state === true || state === "up";
+        const warn = state === "warn" || state === "degraded";
+        if (dot) {
+          dot.textContent = ok ? "✓" : warn ? "!" : "?";
+          dot.classList.add(ok ? "dot-ok" : warn ? "dot-warn" : "dot-down");
+        }
+        if (text) text.textContent = ok ? "opérationnel" : warn ? "dégradé" : typeof state === "string" ? state : "indisponible";
+      };
+
+      const components = payload.components || payload;
+      setDot("bot", components.bot ?? payload.bot ?? (payload.status === "ok" ? "ok" : "down"));
+      setDot("discord", components.discord ?? payload.discord ?? payload.discord_connected);
+      setDot("database", components.database ?? payload.database ?? payload.db);
+      const sources = components.sources ?? payload.sources;
+      if (sources && typeof sources === "object") {
+        const states = Object.values(sources).map((source) => (source && typeof source === "object" ? source.state || source.status : source));
+        const allOk = states.every((state) => state === "ok" || state === true || state === "up");
+        const anyOk = states.some((state) => state === "ok" || state === true || state === "up");
+        setDot("sources", allOk ? "ok" : anyOk ? "warn" : "down");
+        const text = document.querySelector('[data-health-text="sources"]');
+        if (text) text.textContent = states.map((state) => String(state)).join(" · ");
+      } else {
+        setDot("sources", sources);
+      }
+    });
   }
 })();
