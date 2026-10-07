@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a11">
+
+  <meta name="description" content="Guide d&#x27;installation, de configuration et de commandes pour FreeGameDrop, le bot Discord de jeux gratuits d&#x27;OverX.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OverX">
+  <meta property="og:title" content="Documentation FreeGameDrop — OverX">
+  <meta property="og:description" content="Guide d&#x27;installation, de configuration et de commandes pour FreeGameDrop, le bot Discord de jeux gratuits d&#x27;OverX.">
+  <title>Documentation FreeGameDrop — OverX</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/brand-mark.svg">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script src="../assets/site-config.js" defer></script>
+  <script src="../assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Aller au contenu</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="36" height="36"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a>
+      <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Navigation principale">
+        <a href="../index.html">Accueil</a>
+        <a href="../discord-bots/index.html">Bots</a>
+        <a href="../docs/index.html" aria-current="page">Documentation</a>
+        <a href="../status/index.html">Statut</a>
+        <a href="../roadmap/index.html">Roadmap</a>
+        <a class="mobile-nav-cta" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord</a>
+      </nav>
+      <div class="header-actions"><a class="button button-header" data-install-cta href="https://discord.com/oauth2/authorize?client_id=1556443310053130260&amp;permissions=268528656&amp;integration_type=0&amp;scope=bot+applications.commands" target="_blank" rel="noopener noreferrer">Ajouter à Discord <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle><span></span><span></span><span></span></button></div>
+    </div>
+  </header>
+<main id="main-content">
+  <section class="page-hero container docs-hero">
+    <p class="eyebrow">GUIDES OVERX <span class="crumb-slash">/</span> FREEGAMEDROP</p>
+    <h1>La documentation<br><span>sans chercher partout.</span></h1>
+    <p class="hero-lead narrow">Les étapes ci-dessous suivent les commandes et comportements décrits dans le dépôt FreeGameDropDev. Le lien d'invitation public reste à configurer.</p>
+    <div class="docs-search-note"><span aria-hidden="true">⌕</span><span>Une question précise ? Utilise la recherche de ton navigateur avec <kbd>Ctrl</kbd> <span>+</span> <kbd>F</kbd>.</span></div>
+  </section>
+
+  <section class="section container docs-layout">
+    <aside class="docs-toc"><p class="eyebrow">DANS CE GUIDE</p><a href="#installation">Installation</a><a href="#configuration">Configuration</a><a href="#commandes">Commandes</a><a href="#permissions">Permissions</a><a href="#faq">FAQ</a><a href="#auto-hebergement">Auto-hébergement</a></aside>
+    <div class="docs-content">
+      <section class="doc-section" id="installation"><p class="eyebrow">01 · DÉMARRER</p><h2>Installer le bot</h2><ol class="numbered-steps"><li><strong>Ajoute FreeGameDrop à ton serveur.</strong><p>L'invitation publique n'est pas encore configurée sur ce site. Elle sera activée dès que l'Application ID de l'instance sera fourni.</p></li><li><strong>Choisis un serveur où tu peux gérer les applications.</strong><p>Discord demande la permission de gérer le serveur pour autoriser l'installation d'un bot.</p></li><li><strong>Vérifie les permissions puis autorise.</strong><p>Le bot a besoin des permissions documentées ci-dessous pour créer les salons, rôles et annonces.</p></li><li><strong>Lance <code>/setup-auto</code> dans ton serveur.</strong><p>Sélectionne les plateformes souhaitées, puis valide la création ou la mise à jour de la configuration.</p></li></ol><div class="notice notice-warn"><strong>À savoir</strong><p>La disponibilité de l'instance et son URL d'invitation ne sont pas encore connectées au site. Le code source reste consultable sur GitHub.</p><a class="text-link" href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">Ouvrir FreeGameDropDev <span aria-hidden="true">↗</span></a></div></section>
+
+      <section class="doc-section" id="configuration"><p class="eyebrow">02 · CONFIGURATION</p><h2>Configurer les notifications</h2><p><code>/setup-auto</code> crée ou met à jour la catégorie de jeux, les rôles de plateforme, les salons dédiés et le panneau de sélection. Les membres peuvent cliquer sur les boutons pour obtenir ou retirer un rôle de plateforme.</p><ul class="doc-bullets"><li>Les salons de jeux sont organisés par plateforme et configurés en lecture seule pour les membres.</li><li>Les commandes <code>/config</code> et <code>/acces-salon-roles</code> permettent aux administrateurs d'ajuster la configuration décrite par le bot.</li><li><code>/rappel-salon</code> permet de choisir le salon qui reçoit les rappels de fin d'offre.</li><li>Le bot est documenté comme vérifiant les offres toutes les heures; l'état réel de l'instance doit être vérifié avec <code>/sante</code>.</li></ul></section>
+
+      <section class="doc-section" id="commandes"><p class="eyebrow">03 · RÉFÉRENCE</p><h2>Commandes principales</h2><div class="table-wrap"><table class="command-table"><thead><tr><th>Commande</th><th>Accès</th><th>À quoi elle sert</th></tr></thead><tbody>
+        <tr><td><code>/setup-auto</code></td><td>Admin</td><td>Crée ou répare salons, rôles et panneau de sélection.</td></tr>
+        <tr><td><code>/config</code></td><td>Admin</td><td>Rouvre le panneau de configuration.</td></tr>
+        <tr><td><code>/free</code></td><td>Membres</td><td>Parcourt les offres disponibles avec des filtres.</td></tr>
+        <tr><td><code>/favoris</code></td><td>Membres</td><td>Consulte et gère les offres favorites.</td></tr>
+        <tr><td><code>/historique</code></td><td>Membres</td><td>Parcourt les dernières offres connues.</td></tr>
+        <tr><td><code>/recherche</code></td><td>Membres</td><td>Recherche une offre par titre ou description.</td></tr>
+        <tr><td><code>/preferences</code></td><td>Membres</td><td>Filtre par plateforme, type, valeur minimale et genre.</td></tr>
+        <tr><td><code>/alertes</code></td><td>Membres</td><td>Active ou désactive des alertes privées.</td></tr>
+        <tr><td><code>/rappel-salon</code></td><td>Admin</td><td>Choisit le salon des rappels de fin d'offre.</td></tr>
+        <tr><td><code>/stats</code></td><td>Membres</td><td>Affiche les chiffres mesurés par le bot.</td></tr>
+        <tr><td><code>/sante</code></td><td>Membres</td><td>Affiche l'état mesuré du bot, des sources et de la base.</td></tr>
+        <tr><td><code>/mes-donnees</code></td><td>Membres</td><td>Demande la suppression des favoris associés au compte.</td></tr>
+        <tr><td><code>/info</code> · <code>/ping</code></td><td>Membres</td><td>Informations sur le bot et test de réponse.</td></tr>
+        <tr><td><code>/test-jeux</code> · <code>/reset-jeux</code></td><td>Admin</td><td>Actions de test et de réannonce décrites dans le README.</td></tr>
+      </tbody></table></div><p class="fine-print">La liste complète des commandes, leurs options exactes et les notes de version sont maintenues dans le dépôt du bot.</p></section>
+
+      <section class="doc-section" id="permissions"><p class="eyebrow">04 · AUTORISATIONS</p><h2>Permissions nécessaires</h2><p>La documentation du dépôt recommande les permissions Discord utiles à la création des espaces de jeux et à l'envoi des annonces :</p><div class="permission-grid"><span>Gérer les salons</span><span>Gérer les rôles</span><span>Voir les salons</span><span>Envoyer des messages</span><span>Intégrer des liens</span></div><div class="notice"><strong>Rôles de plateforme</strong><p>Place le rôle du bot au-dessus des rôles qu'il doit attribuer. Discord empêchera sinon le bot de les gérer.</p></div></section>
+
+      <section class="doc-section" id="faq"><p class="eyebrow">05 · QUESTIONS FRÉQUENTES</p><h2>FAQ</h2><details class="faq-item"><summary>Le site peut-il configurer mon serveur ?</summary><p>Non. Cette version du site est statique : aucune connexion Discord, aucun dashboard ni aucune API OverX n'y sont activés. La configuration se fait avec les commandes du bot.</p></details><details class="faq-item"><summary>Où trouver les statistiques réelles ?</summary><p>La commande <code>/stats</code> est documentée dans le bot et ne doit afficher que des valeurs mesurées. La page Statut du site indique explicitement qu'aucune source live n'est encore raccordée.</p></details><details class="faq-item"><summary>Le bot est-il actuellement en ligne ?</summary><p>Ce site ne peut pas le confirmer sans endpoint de santé public. Si le bot est présent sur ton serveur, la commande <code>/sante</code> donne son état mesuré selon le code du projet.</p></details><details class="faq-item"><summary>Comment demander de l'aide ?</summary><p>Utilise le suivi de bugs et les discussions du dépôt GitHub FreeGameDropDev. Une invitation Discord de support sera ajoutée si elle est fournie.</p><a class="text-link" href="../support/index.html">Ouvrir la page Support <span aria-hidden="true">→</span></a></details></section>
+
+      <section class="doc-section" id="auto-hebergement"><p class="eyebrow">06 · POUR LES DÉVELOPPEURS</p><h2>Auto-hébergement</h2><p>Le dépôt FreeGameDropDev contient les instructions détaillées sur Python, Docker, les variables d'environnement, les environnements DEV/PROD et les tests. Les secrets doivent rester côté serveur, jamais dans le site.</p><a class="button button-secondary" href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">Lire le README du bot <span aria-hidden="true">↗</span></a></section>
+    </div>
+  </section>
+</main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand-block"><a class="brand" href="../index.html" aria-label="OverX — accueil"><img src="../assets/brand-mark.svg" alt="" width="34" height="34"><span class="brand-word">OVER<span>X</span><small>DISCORD TOOLS</small></span></a><p>Des outils Discord conçus pour simplifier vos serveurs.</p><a class="footer-github" href="https://github.com/TOFazer/OrvexWebsite" target="_blank" rel="noopener noreferrer">Projet du site sur GitHub <span aria-hidden="true">↗</span></a></div>
+      <div class="footer-links"><div><p class="footer-label">EXPLORER</p><a href="../discord-bots/index.html">Nos bots</a><a href="../install/index.html">Installer FreeGameDrop</a><a href="../docs/index.html">Documentation</a><a href="../status/index.html">Statut des services</a><a href="../changelog/index.html">Changelog</a></div><div><p class="footer-label">COMMUNAUTÉ</p><a href="../support/index.html">Support</a><a href="../roadmap/index.html">Roadmap</a><a href="https://github.com/TOFazer/FreeGameDropDev" target="_blank" rel="noopener noreferrer">FreeGameDropDev ↗</a></div><div><p class="footer-label">LÉGAL</p><a href="../privacy/index.html">Confidentialité</a><a href="../terms/index.html">Conditions</a><a href="../legal/index.html">Mentions légales</a></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span data-current-year>2026</span> OverX · Projet indépendant</span><span class="footer-transparency"><span class="footer-dot"></span> Pas de statistiques non vérifiées</span></div>
+  </footer>
+  <div class="sr-only" role="status" aria-live="polite" data-site-announcer></div>
+
+</body>
+</html>
